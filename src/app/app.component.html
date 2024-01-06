@@ -46,13 +46,10 @@
   }
 
   .form {
+    width: 90%;
     margin-top: 20px;
-    text-align: right;
   }
 
-  .full-width {
-    width: 100%;
-  }
 
   .message {
     padding: 10px;
@@ -77,17 +74,8 @@
     margin-top: -20px;
   }
   .form {
-    position: fixed;
-    bottom: 0;
     width: 100%;
     margin-bottom: 10px;
-  }
-  .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    margin-bottom: 10px;
-    text-align: center;
   }
 
   .footer .centered-content {
@@ -111,11 +99,21 @@
     padding: 0;
   }
   .main-chat {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
     background-color: #fff;
+    height: 10vh;
+    justify-content: center;
+    align-items: center;
   }
   .input {
     font-size: 16px;
     max-width: 50%;
+  }
+
+  .full-width {
+    width: 99%;
   }
 
 </style>
@@ -149,28 +147,29 @@
       </div>
     </div>
   </div>
-  <div class="main-chat">
-    <form class="form" (ngSubmit)="fetchChat()">
-      <mat-form-field class="full-width">
-        <input
-          autocomplete="off"
-          matInput
-          placeholder="Start a new chat"
-          [(ngModel)]="inputText"
-          name="inputText"  
-        />
-      </mat-form-field>
-      <div class="button-container">
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          (click)="clearChat()"
-        >
-          Clear Chat
-        </button>
-        <button mat-flat-button color="primary" type="submit">Send</button>
-      </div>
+  
+</main>
+<div class="main-chat">
+  <form class="form" (ngSubmit)="fetchChat()">
+
+    <mat-form-field class="full-width">
+      <input
+        autocomplete="off"
+        matInput
+        placeholder="Start a new chat"
+        [(ngModel)]="inputText"
+        name="inputText"  
+      />
+    </mat-form-field>
+    <div class="button-container">
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="clearChat()"
+      >
+        Clear Chat
+      </button>
       <footer class="footer">
         <div class="centered-content">
           {{ currentGPT }}
@@ -178,8 +177,11 @@
           <b style="font-size: small">AngularGPT v1.0.0</b>
         </div>
       </footer>
-    </form>
-  </div>
-</main>
+      <button mat-flat-button color="primary" type="submit">Send</button>
+    </div>
+    
+  </form>
+
+</div>
 <app-settings class="settings-icon"></app-settings>
 <router-outlet></router-outlet>
