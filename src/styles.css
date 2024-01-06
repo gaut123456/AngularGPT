@@ -1,0 +1,16 @@
+/* Vous pouvez ajouter des styles globaux à ce fichier et également importer d'autres fichiers de style */
+
+html, body { 
+    height: 100%; 
+    overflow: auto;
+    scrollbar-width: none; /* pour Firefox */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none; /* pour Chrome, Safari et Opera */
+}
+
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
