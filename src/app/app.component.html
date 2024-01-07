@@ -1,4 +1,8 @@
 <style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
   body {
     font-family: "Roboto", sans-serif;
     color: #333;
@@ -8,19 +12,14 @@
     top: 10px;
     right: 10px;
   }
-
-  .main {
-    margin-top: 20px;
+  main {
     padding: 20px;
     background-color: #f5f5f5;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    height: 90vh;
-    padding-bottom: 50px;
-    overflow-y: auto; /* Ajoute cela pour permettre le défilement */
-    height: calc(90vh - 10vh); /* Ajustez 10vh à la hauteur de votre header */
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 88vh;
   }
-
   button {
     font-size: 16px;
     padding: 10px 20px;
@@ -32,25 +31,30 @@
     transition: background-color 0.3s ease;
     max-width: 100%;
     box-sizing: border-box;
-    margin-right: 20px; /* Ajoutez cette ligne */
   }
-
   .button-container {
     display: flex;
     justify-content: space-between;
-    padding-right: 20px; /* Ajoutez cette ligne */
+    padding-right: 20px;
+    flex-basis: 100%;
   }
-
   button:hover {
     background-color: #303f9f;
   }
-
   .form {
-    width: 90%;
-    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
-
-
+  .input-field {
+    flex-grow: 1;
+    margin-right: 20px;
+  }
+  .full-width {
+    width: calc(100% - 40px);
+  }
   .message {
     padding: 10px;
     margin: 10px 0;
@@ -58,7 +62,6 @@
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-
   .message-content {
     display: flex;
     align-items: center;
@@ -73,15 +76,9 @@
     height: 65px;
     margin-top: -20px;
   }
-  .form {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
   .footer .centered-content {
     text-align: center;
   }
-
   .centered-content {
     text-align: center;
     font-size: xx-small;
@@ -103,22 +100,13 @@
     flex-direction: column;
     padding: 20px;
     background-color: #fff;
-    height: 10vh;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    height: 12vh;
+    box-sizing: border-box;
   }
-  .input {
-    font-size: 16px;
-    max-width: 50%;
-  }
-
-  .full-width {
-    width: 99%;
-  }
-
 </style>
 
-<main class="main">
+<main>
   <div class="header">
     <img
       src="https://miro.medium.com/v2/resize:fit:1400/1*Klh1l7wkoG6PDPb9A5oCHQ.png"
@@ -127,8 +115,7 @@
     />
     <h2>AngularGPT</h2>
   </div>
-  <div *ngFor="let message of messageHistory">
-    <div class="message" [ngClass]="message.role">
+  <div *ngFor="let message of messageHistory; let i = index" class="message" [ngClass]="message.role" #msgRef>
       <div class="message-content">
         <img
           *ngIf="message.role === 'user'"
@@ -146,22 +133,21 @@
         <markdown clipboard [data]="message.content"></markdown>
       </div>
     </div>
-  </div>
-  
 </main>
 <div class="main-chat">
   <form class="form" (ngSubmit)="fetchChat()">
-
-    <mat-form-field class="full-width">
+    <mat-form-field class="input-field full-width">
       <input
         autocomplete="off"
         matInput
         placeholder="Start a new chat"
         [(ngModel)]="inputText"
-        name="inputText"  
+        name="inputText"
       />
     </mat-form-field>
+    
     <div class="button-container">
+      
       <button
         mat-flat-button
         color="primary"
@@ -169,6 +155,8 @@
         (click)="clearChat()"
       >
         Clear Chat
+
+        
       </button>
       <footer class="footer">
         <div class="centered-content">
@@ -178,10 +166,10 @@
         </div>
       </footer>
       <button mat-flat-button color="primary" type="submit">Send</button>
+      
     </div>
     
   </form>
-
 </div>
 <app-settings class="settings-icon"></app-settings>
 <router-outlet></router-outlet>

@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
+
+
 export class AppComponent {
+
+  @ViewChildren('msgRef') messages: QueryList<ElementRef> | undefined;
+  
   apiKey: string | undefined;
   title = 'Angular GPT Chatbot';
   inputText: any;
@@ -75,5 +80,19 @@ export class AppComponent {
   clearChat() {
     this.messageHistory = [];
     localStorage.removeItem('messageHistory');
+  }
+  ngAfterViewInit() {
+    if (this.messages) {
+      this.messages.changes.subscribe(elements => {
+        this.scrollToBottom();
+      });
+    }
+  }
+
+  scrollToBottom() {
+    if (this.messages && this.messages.length > 0) {
+      const lastMessage = this.messages.last.nativeElement;
+      lastMessage.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }
